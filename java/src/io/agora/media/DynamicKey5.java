@@ -48,7 +48,8 @@ public class DynamicKey5 {
 
         Message m = new Message(service, rawAppID, unixTs, salt, channelName, (int)(uid & 0xFFFFFFFFL), expiredTs, extra);
         byte[] toSign = pack(m);
-        return new String(Hex.encodeHex(DynamicKeyUtil.encodeHMAC(rawAppCertificate, toSign), false));
+        char[] content = Hex.encodeHex(DynamicKeyUtil.encodeHMAC(rawAppCertificate, toSign));
+        return new String(content).toUpperCase();
     }
 
     public static String generateDynamicKey(String appID, String appCertificate, String channel, int ts, int salt, long uid, int expiredTs, TreeMap<Short, String> extra, short service) throws Exception {
